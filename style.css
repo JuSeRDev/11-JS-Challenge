@@ -113,7 +113,7 @@ span{
     font-size: 14px;
     font-style: italic;
     height: 0px;
-    transition: height 5px ease;
+    transition: height 0.2s ease;
     overflow: hidden;
 }
 
