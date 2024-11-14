@@ -87,7 +87,6 @@ button.addEventListener("click", ()=>{
             errorMonthValid.style.height = "0"
             monthOk = true
         }
-
         
         if (yearValue > year) {
             errorYearhValid.style.height = "18px"
