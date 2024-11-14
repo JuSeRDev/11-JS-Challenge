@@ -67,11 +67,20 @@ button.addEventListener("click", ()=>{
 
     const errorDateValid = document.querySelector(".error-valid-data")
     
+    const spanDays = document.querySelector(".span-days")
+    const spanMonths = document.querySelector(".span-months")
+    const spanYears = document.querySelector(".span-year")
+
+    const emptyText = ()=>{
+        spanDays.innerHTML = "-- "
+            spanMonths.innerHTML = "-- "
+            spanYears.innerHTML = "-- "
+    }
 
     const dateValid = (dayValue, monthValue, yearValue)=>{
         let totalDay=  new Date(yearValue, monthValue, 0).getDate()
 
-        if (monthValue > 12) {
+        if (monthValue > 12 && monthValue == "") {
             errorMonthValid.style.height = "18px"
             monthOk = false
         }else{
@@ -110,32 +119,28 @@ button.addEventListener("click", ()=>{
             let days = today.getDate() - birthDate.getDate();
         
             if (months < 0 || (months === 0 && days < 0)) {
-                years--;
-                months += 12; // Ajuste de meses negativos
+                years--
+                months += 12
             }
         
             if (days < 0) {
-                const previousMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
-                const daysInPreviousMonth = new Date(today.getFullYear(), previousMonth + 1, 0).getDate();
-                days += daysInPreviousMonth;
-                months--;
+                const previousMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1
+                const daysInPreviousMonth = new Date(today.getFullYear(), previousMonth + 1, 0).getDate()
+                days += daysInPreviousMonth
+                months--
             }
-        
-            console.log(`Edad: ${years} años, ${months} meses, y ${days} días`);
+            spanDays.innerHTML = `${days} `
+            spanMonths.innerHTML = `${months} `
+            spanYears.innerHTML = `${years} `
         }
 
         //! TERMINO DE ESTAFUNCION
         
-        if (dayOk === true && monthOk === true && yearOk === true && emptyOk === true) {
-            console.log("esta todo correcto")
+        if (dayOk && monthOk && yearOk && dayValue !== "" && monthValue !== "" && yearValue !== "") {
             const birthDate = new Date(yearValue, monthValue-1, dayValue)
             calculateAge(birthDate)
-        } else {
-            console.log("aun hay erroes")
-            console.log(dayOk)
-            console.log(monthOk)
-            console.log(yearOk)
-            console.log(emptyOk)
+        }else {
+            emptyText()
         }
     }
     dateValid(dayValue, monthValue ,yearValue)

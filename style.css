@@ -55,6 +55,7 @@ label{
     color: var(--Smokey-grey);
     font-weight: 700;
     transition: color 0.2s ease;
+    letter-spacing: 3px;
 }
 
 input{
@@ -126,3 +127,82 @@ span{
 
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); }
+
+@media (width <= 850px){
+    .container{
+        width: 90vw;
+    }
+
+    .form{
+        gap: 15px;
+        padding-bottom: 70px;
+    }
+
+    .input-group{
+        width: 100%;
+    }
+
+    input{
+        width: 120px;
+        text-indent: 15px;
+    }
+
+    img{
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 60%);
+    }
+
+    .text{
+        font-size: 85px;
+        margin-top: 70px;
+    }
+}
+
+@media (width <= 600px){
+    .container{
+        width: 90vw;
+        padding: 25px;
+        height: auto;
+        border-radius: 10px 10px 90px 10px;
+    }
+
+    .form{
+        gap: 10px;
+        padding-bottom: 60px;
+    }
+
+    .input-group{
+        width: 100%;
+    }
+
+    label{
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+
+    input{
+        width: 80px;
+        height: 50px;
+        text-indent: 15px;
+        font-size: 20px;
+    }
+
+    input::placeholder{
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    img{
+        width: 70px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 60%);
+    }
+
+    .text{
+        font-size: 50px;
+        margin-top: 50px;
+        margin-bottom: 10px;
+    }
+}
