@@ -73,8 +73,8 @@ button.addEventListener("click", ()=>{
 
     const emptyText = ()=>{
         spanDays.innerHTML = "-- "
-            spanMonths.innerHTML = "-- "
-            spanYears.innerHTML = "-- "
+        spanMonths.innerHTML = "-- "
+        spanYears.innerHTML = "-- "
     }
 
     const dateValid = (dayValue, monthValue, yearValue)=>{
@@ -87,6 +87,7 @@ button.addEventListener("click", ()=>{
             errorMonthValid.style.height = "0"
             monthOk = true
         }
+
         
         if (yearValue > year) {
             errorYearhValid.style.height = "18px"
@@ -100,7 +101,7 @@ button.addEventListener("click", ()=>{
             errorDayValid.style.height = "18px"
             errorDateValid.style.height = "0"
             dayOk = false
-        } else if (dayValue > totalDay) {
+        } else if (dayValue > totalDay || monthValue > 12) {
             errorDateValid.style.height = "18px"
             errorDayValid.style.height = "0"
             dayOk = false
@@ -136,7 +137,7 @@ button.addEventListener("click", ()=>{
 
         //! TERMINO DE ESTAFUNCION
         
-        if (dayOk && monthOk && yearOk && dayValue !== "" && monthValue !== "" && yearValue !== "") {
+        if (dayOk && monthOk && yearOk && dayValue !== "" && monthValue !== "" && monthValue < 13 && yearValue !== "") {
             const birthDate = new Date(yearValue, monthValue-1, dayValue)
             calculateAge(birthDate)
         }else {
