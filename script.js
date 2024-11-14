@@ -24,68 +24,119 @@ validFuncNumber(dayInput, 2)
 validFuncNumber(monthInput, 2)
 validFuncNumber(yearInput, 4)
 
-button.addEventListener("click", (e)=>{
+const red = "var(--Light-red)"
+
+button.addEventListener("click", ()=>{
 
     let dayValue = dayInput.value
     let monthValue = monthInput.value
     let yearValue = yearInput.value
 
-    const birthDate = new Date(yearValue, monthValue-1, dayValue)
-
     const errorDayRequired = document.querySelector(".error-day-required")
     const errorMonthRequired = document.querySelector(".error-month-required")
     const errorYearRequired = document.querySelector(".error-year-required")
+
+    const dayLabel = document.querySelector(".day-label")
+    const monthLabel = document.querySelector(".month-label")
+    const yearLabel = document.querySelector(".year-label")
     
-    const emptyValue = (data, styles)=>{
+    let dayOk, monthOk, yearOk, emptyOk = false
+
+    const emptyValue = (data, styles, inputs, labels)=>{
         if (data === "") {
             styles.style.height = "18px"
-            e.preventDefault()
+            inputs.style.borderColor = red
+            labels.style.color = red
+            emptyOk = false
+
         } else {
             styles.style.height = "0"
+            inputs.style.borderColor = ""
+            labels.style.color = ""
+            emptyOk = true
         }
     }
 
-    emptyValue(dayValue, errorDayRequired)
-    emptyValue(monthValue, errorMonthRequired)
-    emptyValue(yearValue, errorYearRequired)
+    emptyValue(dayValue, errorDayRequired, dayInput, dayLabel)
+    emptyValue(monthValue, errorMonthRequired, monthInput, monthLabel)
+    emptyValue(yearValue, errorYearRequired, yearInput, yearLabel)
 
     const errorDayValid = document.querySelector(".error-day-valid")
     const errorMonthValid = document.querySelector(".error-month-valid")
     const errorYearhValid = document.querySelector(".error-year-valid")
 
     const errorDateValid = document.querySelector(".error-valid-data")
+    
 
     const dateValid = (dayValue, monthValue, yearValue)=>{
         let totalDay=  new Date(yearValue, monthValue, 0).getDate()
-        if (dayValue > totalDay && (monthValue > 12 || yearValue > year)) {
-            errorDayValid.style.height = "18px"
-            errorDateValid.style.height = "0"
-            e.preventDefault()
-        } else if (dayValue > totalDay) {
-            errorDateValid.style.height = "18px"
-            errorDayValid.style.height = "0"
-            e.preventDefault()
-        } else {
-            errorDayValid.style.height = "0"
-            errorDateValid.style.height = "0"
-        }
-        
+
         if (monthValue > 12) {
             errorMonthValid.style.height = "18px"
-            e.preventDefault()
+            monthOk = false
         }else{
             errorMonthValid.style.height = "0"
+            monthOk = true
         }
         
         if (yearValue > year) {
             errorYearhValid.style.height = "18px"
-            e.preventDefault()
+            yearOk = false
         } else {
             errorYearhValid.style.height = "0"
+            yearOk = true
         }
+
+        if (dayValue > totalDay && (monthValue > 12 || yearValue > year)) {
+            errorDayValid.style.height = "18px"
+            errorDateValid.style.height = "0"
+            dayOk = false
+        } else if (dayValue > totalDay) {
+            errorDateValid.style.height = "18px"
+            errorDayValid.style.height = "0"
+            dayOk = false
+        } else {
+            errorDayValid.style.height = "0"
+            errorDateValid.style.height = "0"
+            dayOk = true
+        }
+
+        //! REVISAR ESTA FUNCION
+
+        const calculateAge = (birthDate) => {
+            const today = new Date();
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
         
+            if (months < 0 || (months === 0 && days < 0)) {
+                years--;
+                months += 12; // Ajuste de meses negativos
+            }
+        
+            if (days < 0) {
+                const previousMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
+                const daysInPreviousMonth = new Date(today.getFullYear(), previousMonth + 1, 0).getDate();
+                days += daysInPreviousMonth;
+                months--;
+            }
+        
+            console.log(`Edad: ${years} años, ${months} meses, y ${days} días`);
+        }
+
+        //! TERMINO DE ESTAFUNCION
+        
+        if (dayOk === true && monthOk === true && yearOk === true && emptyOk === true) {
+            console.log("esta todo correcto")
+            const birthDate = new Date(yearValue, monthValue-1, dayValue)
+            calculateAge(birthDate)
+        } else {
+            console.log("aun hay erroes")
+            console.log(dayOk)
+            console.log(monthOk)
+            console.log(yearOk)
+            console.log(emptyOk)
+        }
     }
     dateValid(dayValue, monthValue ,yearValue)
-
-
 })
